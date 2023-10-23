@@ -5,8 +5,10 @@
   "scripts": {
     "start": "node lib/index.js",
     "clean": "rimraf lib",
-    "build-swift": "swift build --package-path ./MacPowerMonitor",
-    "build": "pnpm clean && tsc -p ./tsconfig.json"
+    "clean:swift": "rimraf MacPowerMonitor/.build swift-libs",
+    "build:swift": "scripts/build-swift.sh",
+    "build:swift-release": "scripts/build-swift-release.sh",
+    "build": "scripts/build.sh"
   },
   "keywords": [],
   "author": "",
