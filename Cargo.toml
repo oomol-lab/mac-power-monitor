@@ -1,0 +1,17 @@
+[package]
+name = "mac-power-monitor"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = {version="2", features=["async"]}
+napi-derive = "2"
+libc = "0.2"
+lazy_static = "1.4.0"
+
+[build-dependencies]
+napi-build = "1"
+cc = "1.0"
