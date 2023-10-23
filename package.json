@@ -7,13 +7,13 @@
     "clean": "rimraf lib",
     "clean:swift": "rimraf MacPowerMonitor/.build swift-libs",
     "build:swift": "scripts/build-swift.sh",
-    "build:swift-release": "scripts/build-swift-release.sh",
     "build": "scripts/build.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.8.7",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   },

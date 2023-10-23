@@ -1,7 +1,8 @@
+import { dirname, join } from "path";
 import { Library } from "@lwahonen/ffi-napi";
 
 const myLib = Library(
-    "./MacPowerMonitor/.build/debug/libMacPowerMonitor.dylib", {
+    join(dirname(__filename), "swift-libs", "libMacPowerMonitor.dylib"), {
         "add": ["int", ["int", "int"]],
     },
 );
