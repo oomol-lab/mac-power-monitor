@@ -1,0 +1,21 @@
+{
+  "name": "mac-power-monitor",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "clean": "rimraf lib",
+    "build-swift": "swift build --package-path ./MacPowerMonitor",
+    "build": "pnpm clean && tsc -p ./tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@lwahonen/ffi-napi": "^4.0.12"
+  }
+}
