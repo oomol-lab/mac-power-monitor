@@ -14,13 +14,12 @@ io_connect_t root_port; // a reference to the Root Power Domain IOService
 IONotificationPortRef notifyPortRef;
 // notifier object, used to deregister later
 io_object_t notifierObject;
-// this parameter is passed to the callback
-void *refCon;
+
 CFRunLoopRef runLoop;
 
 typedef int (*OnCanSleep)();
-typedef void (*OnWillSleep)();
-typedef void (*OnWillWake)();
+typedef void *(*OnWillSleep)();
+typedef void *(*OnWillWake)();
 
 typedef struct
 {
@@ -62,9 +61,9 @@ void SleepCallback(void *refCon, io_service_t service, natural_t messageType, vo
     }
 }
 
-extern int registerNotifications()
+extern int startNotifications(Callback *callback)
 {
-    root_port = IORegisterForSystemPower(refCon, &notifyPortRef, SleepCallback, &notifierObject);
+    root_port = IORegisterForSystemPower(callback, &notifyPortRef, SleepCallback, &notifierObject);
     if (root_port == 0)
     {
         return 1;
@@ -77,17 +76,14 @@ extern int registerNotifications()
     return 0;
 }
 
-extern void unregisterNotifications()
+extern void stopNotifications()
 {
     CFRunLoopRemoveSource(runLoop,
                           IONotificationPortGetRunLoopSource(notifyPortRef),
                           kCFRunLoopCommonModes);
 
     IODeregisterForSystemPower(&notifierObject);
-
     IOServiceClose(root_port);
-
     IONotificationPortDestroy(notifyPortRef);
-
     CFRunLoopStop(runLoop);
 }

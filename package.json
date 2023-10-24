@@ -1,13 +1,14 @@
 {
     "package": "mac-power-monitor",
     "devDependencies": {
-        "@napi-rs/cli": "^1.0.0"
+        "@napi-rs/cli": "^1.0.0",
+        "rimraf": "^5.0.5"
     },
     "napi": {
         "name": "mac-power-monitor"
     },
     "scripts": {
-        "build": "napi build --release dist",
-        "build:debug": "napi build dist"
+        "build": "cargo clean && napi build --release dist",
+        "build:debug": "cargo clean && napi build dist"
     }
 }
