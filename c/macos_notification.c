@@ -9,12 +9,9 @@
 #include <IOKit/pwr_mgt/IOPMLib.h>
 #include <IOKit/IOMessage.h>
 
-io_connect_t root_port; // a reference to the Root Power Domain IOService
-// notification port allocated by IORegisterForSystemPower
+io_connect_t root_port;
 IONotificationPortRef notifyPortRef;
-// notifier object, used to deregister later
 io_object_t notifierObject;
-
 CFRunLoopRef runLoop;
 
 typedef int (*OnCanSleep)();
@@ -44,15 +41,19 @@ void SleepCallback(void *refCon, io_service_t service, natural_t messageType, vo
             IOCancelPowerChange(root_port, (long)messageArgument);
         }
         break;
+
     case kIOMessageSystemWillSleep:
         (*callback).willSleep();
         IOAllowPowerChange(root_port, (long)messageArgument);
         break;
+
     case kIOMessageSystemWillPowerOn:
         (*callback).willWake();
         break;
+
     case kIOMessageSystemHasPoweredOn:
         break;
+
     default:
         break;
     }

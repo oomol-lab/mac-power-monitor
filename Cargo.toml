@@ -10,6 +10,7 @@ crate-type = ["cdylib"]
 napi = {version="2", features=["async"]}
 napi-derive = "2"
 libc = "0.2"
+lazy_static = "1.4.0"
 
 [build-dependencies]
 napi-build = "1"
