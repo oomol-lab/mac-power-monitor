@@ -1,20 +1,15 @@
-const p = require("./dist/mac-power-monitor.node");
-
 (async () => {
-    p.start();
+    const monitor = await require("./lib/index").createMacPowerMonitor();
     await sleep(1000);
 
     console.log("start register callbacks");
 
-    p.registerOnWillSleep(() => {
+    monitor.listenOnWillSleep(() => {
         console.log("say I will sleep");
     });
-
-    p.registerOnWillWake(() => {
+    monitor.listenOnWillWake(() => {
         console.log("say I will wake");
-        p.unregister();
     });
-
     await sleep(1000 * 60 * 60 * 24);
 
 })().catch((error) => console.error(error));
