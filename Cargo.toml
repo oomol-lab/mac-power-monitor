@@ -9,7 +9,8 @@ crate-type = ["cdylib"]
 [dependencies]
 napi = {version="2", features=["async"]}
 napi-derive = "2"
-tokio = { version = "1", features = ["full"] }
+libc = "0.2"
 
 [build-dependencies]
 napi-build = "1"
+cc = "1.0"

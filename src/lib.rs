@@ -1,8 +1,22 @@
 use std::env;
 
-/// import the preludes
 use napi::bindgen_prelude::*;
 use napi_derive::napi;
+
+mod sys {
+    use libc::{c_int, c_void};
+
+    #[link(name = "macos_notification")]
+    extern "C" {
+        pub fn registerNotifications() -> c_int;
+        pub fn unregisterNotifications() -> c_void;
+    }
+}
+
+#[napi]
+fn test_sleep() -> i32 {
+    0
+}
 
 /// module registration is done by the runtime, no need to explicitly do it now.
 #[napi]
