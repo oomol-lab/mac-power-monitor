@@ -37,7 +37,6 @@ void SleepCallback(void *refCon, io_service_t service, natural_t messageType, vo
     case kIOMessageCanSystemSleep:
         if ((*callback).canSleep())
         {
-            // printf("can sleep");
             IOAllowPowerChange(root_port, (long)messageArgument);
         }
         else
@@ -47,12 +46,10 @@ void SleepCallback(void *refCon, io_service_t service, natural_t messageType, vo
         break;
     case kIOMessageSystemWillSleep:
         (*callback).willSleep();
-        // printf("sleeping");
         IOAllowPowerChange(root_port, (long)messageArgument);
         break;
     case kIOMessageSystemWillPowerOn:
         (*callback).willWake();
-        // printf("powering on");
         break;
     case kIOMessageSystemHasPoweredOn:
         break;
