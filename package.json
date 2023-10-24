@@ -1,0 +1,13 @@
+{
+    "package": "mac-power-monitor",
+    "devDependencies": {
+        "@napi-rs/cli": "^1.0.0"
+    },
+    "napi": {
+        "name": "mac-power-monitor"
+    },
+    "scripts": {
+        "build": "napi build --release dist",
+        "build:debug": "napi build dist"
+    }
+}
