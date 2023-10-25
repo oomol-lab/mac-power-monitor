@@ -1,0 +1,61 @@
+name: Rlease
+on: 
+  push:
+    tags: 
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Rust
+        uses: moonrepo/setup-rust@v1
+
+      - name: Setup Rust
+        run: |
+          rustup install 1.72.1
+          rustup default 1.72.1
+          rustup target add x86_64-apple-darwin
+          rustup target add aarch64-apple-darwin
+
+      - name: Build
+        run: |
+          pnpm i
+          pnpm build
+
+      - name: Pack
+        run: |
+          pnpm pack
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            lib/*
+            *.tgz
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish
+        run: |
+          pnpm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

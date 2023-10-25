@@ -1,7 +1,10 @@
 {
   "name": "@oomol-lab/mac-power-monitor",
   "version": "1.0.0",
+  "description": "macOS Sleep / Wake notifications",
   "author": "Tao Zeyu",
+  "homepage": "https://github.com/oomol-lab/mac-power-monitor",
+  "license": "MIT",
   "type": "commonjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,7 +17,9 @@
       ]
     }
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "cargo clean && rimraf lib",
     "build": "pnpm clean && ./scripts/cross-build.sh && tsup-node",
