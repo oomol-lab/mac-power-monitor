@@ -1,5 +1,7 @@
 # mac-power-monitor
 
+[![Test Service](https://github.com/oomol-lab/mac-power-monitor/actions/workflows/test-service.yml/badge.svg)](https://github.com/oomol-lab/mac-power-monitor/actions/workflows/test-service.yml)
+
 ```typescript
 import { createMacPowerMonitor } from "@oomol-lab/mac-power-monitor";
 
