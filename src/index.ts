@@ -1,3 +1,4 @@
+import { join } from "path";
 import { platform } from "os";
 
 let current: MacPowerMonitor | null = null;
@@ -13,7 +14,7 @@ export interface MacPowerMonitor {
 }
 
 export function createMacPowerMonitor(): MacPowerMonitor {
-    if (platform() === "darwin") {
+    if (platform() !== "darwin") {
         return createDoNothing();
     }
     if (current) {
@@ -21,7 +22,7 @@ export function createMacPowerMonitor(): MacPowerMonitor {
     }
     let didStop = false;
 
-    const node = require(`./mac-power-monitor.darwin-${process.platform}.node`);
+    const node = require(join(__dirname, `./mac-power-monitor.darwin-${process.arch}.node`));
     const monitor: Omit<MacPowerMonitor, "canSleep"> = {
         unregisterAll: () => {
             assertIsRunning();
