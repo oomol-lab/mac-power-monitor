@@ -1,18 +1,25 @@
 {
-  "name": "mac-power-monitor",
+  "name": "@oomol-lab/mac-power-monitor",
   "version": "1.0.0",
   "author": "Tao Zeyu",
   "type": "commonjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "os": ["darwin"],
   "napi": {
-    "name": "mac-power-monitor"
+    "name": "mac-power-monitor",
+    "triples": {
+      "additional": [
+        "x86_64-apple-darwin",
+        "arm-apple-darwin"
+      ]
+    }
   },
   "files": ["lib"],
   "scripts": {
     "clean": "cargo clean && rimraf lib",
-    "build": "pnpm clean && napi build --release lib && tsup-node",
-    "build:debug": "pnpm clean && napi build lib && tsup-node"
+    "build": "pnpm clean && ./scripts/cross-build.sh && tsup-node",
+    "build:debug": "pnpm clean && napi build --platform lib && tsup-node"
   },
   "devDependencies": {
     "@napi-rs/cli": "^1.0.0",

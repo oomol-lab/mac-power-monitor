@@ -1,3 +1,5 @@
+import { platform } from "os";
+
 let current: MacPowerMonitor | null = null;
 
 export type Disposer = () => void;
@@ -10,14 +12,16 @@ export interface MacPowerMonitor {
     unregisterAll(): void;
 }
 
-export async function createMacPowerMonitor(): Promise<MacPowerMonitor> {
+export function createMacPowerMonitor(): MacPowerMonitor {
+    if (platform() === "darwin") {
+        return createDoNothing();
+    }
     if (current) {
         throw new Error("did create. should dispose the previous");
     }
     let didStop = false;
 
-    const path = "./mac-power-monitor.node";
-    const node = require(path);
+    const node = require(`./mac-power-monitor.darwin-${process.platform}.node`);
     const monitor: Omit<MacPowerMonitor, "canSleep"> = {
         unregisterAll: () => {
             assertIsRunning();
@@ -65,6 +69,12 @@ export async function createMacPowerMonitor(): Promise<MacPowerMonitor> {
     return current;
 }
 
-function fileURLToPath(url: string) {
-    throw new Error("Function not implemented.");
+function createDoNothing(): MacPowerMonitor {
+    return {
+        canSleep: true,
+        listenOnWillSleep: () => () => {},
+        listenOnWillWake: () => () => {},
+        dispose: () => {},
+        unregisterAll: () => {},
+    };
 }
