@@ -24,7 +24,7 @@
     "clean": "cargo clean && rimraf lib",
     "build": "pnpm clean && ./scripts/cross-build.sh && tsup-node",
     "build:debug": "pnpm clean && napi build --platform lib && tsup-node",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "./scripts/prepublish-only.sh"
   },
   "devDependencies": {
     "@napi-rs/cli": "^1.0.0",
