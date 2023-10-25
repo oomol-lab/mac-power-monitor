@@ -5,7 +5,6 @@
   "type": "commonjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "os": ["darwin"],
   "napi": {
     "name": "mac-power-monitor",
     "triples": {
